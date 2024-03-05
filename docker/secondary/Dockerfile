@@ -31,11 +31,11 @@ RUN pip install -U --no-cache-dir --upgrade-strategy only-if-needed \
     "rl-coach-slim==1.0.0"  \
     "protobuf<3.20" \
     awscli
-RUN wget https://raw.githubusercontent.com/protocolbuffers/protobuf/main/python/google/protobuf/internal/builder.py -O /usr/local/lib/python3.8/dist-packages/google/protobuf/internal/builder.py
+RUN wget https://raw.githubusercontent.com/protocolbuffers/protobuf/main/python/google/protobuf/internal/builder.py -O /usr/local/lib/python3.10/dist-packages/google/protobuf/internal/builder.py
 
 COPY ./files/redis.conf /etc/redis/redis.conf
 COPY ./files/rl_coach.patch /opt/amazon/rl_coach.patch
-RUN patch -p1 -N --directory=/usr/local/lib/python3.8/dist-packages/ < /opt/amazon/rl_coach.patch
+RUN patch -p1 -N --directory=/usr/local/lib/python3.10/dist-packages/ < /opt/amazon/rl_coach.patch
 
 ENV COACH_BACKEND=tensorflow
 
