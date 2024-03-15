@@ -38,7 +38,7 @@ VERSION=$(cat VERSION)
 
 echo "Preparing docker images for [$ARCH]"
 
-TF_VER="tensorflow==2.13.1\ntensorflow-probability==0.21.0"
+TF_VER="tensorflow\ntensorflow-probability"
 
 ## First stage
 if [[ -z "$OPT_SECOND_STAGE_ONLY" ]]; then
