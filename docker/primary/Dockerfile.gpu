@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
+FROM nvidia/cuda:12.3.2-cudnn9-runtime-ubuntu22.04
 ARG TF_VER
 LABEL maintainer="Amazon AI"
 
@@ -24,8 +24,8 @@ RUN apt-get update \
     python3-pip \
     python3-setuptools \
     python3-dev \
-    cuda-command-line-tools-11-8 \
-    cuda-nvcc-11-8 \	
+    cuda-command-line-tools-12-3 \
+    cuda-nvcc-12-3 \
     libgomp1 \
     libfreetype6-dev \
     libhdf5-serial-dev \
