@@ -28,10 +28,12 @@ RUN pip install -U --no-cache-dir --upgrade-strategy only-if-needed \
     pyglet \
     gym \
     "redis" \
-    "rl-coach-slim==1.0.0"  \
     "protobuf" \
     awscli
-RUN wget https://raw.githubusercontent.com/protocolbuffers/protobuf/main/python/google/protobuf/internal/builder.py -O /usr/local/lib/python3.10/dist-packages/google/protobuf/internal/builder.py
+
+RUN pip install --no-deps "rl-coach-slim==1.0.0"
+
+RUN wget https://raw.githubusercontent.com/protocolbuffers/protobuf/main/python/google/protobuf/internal/builder.py -O /usr/local/lib/python3.11/dist-packages/google/protobuf/internal/builder.py
 RUN pip install --no-cache-dir tensorflow[and-cuda] && pip uninstall tensorflow -y
 RUN pip install --no-cache-dir sagemaker-tensorflow-training
 RUN pip install --no-cache-dir tensorflow==2.15.1
@@ -41,8 +43,8 @@ COPY --from=guywilsonjr/test:tfb-py310-alderlake /tfo /tfo
 #RUN sed -i 's/tf.compat.v1.layers.conv2d/tf.keras.layers.Conv2D/g' /usr/local/lib/python3.10/dist-packages/rl_coach/architectures/tensorflow_components/layers.py
 COPY ./files/redis.conf /etc/redis/redis.conf
 COPY ./files/rl_coach.patch /opt/amazon/rl_coach.patch
-RUN patch -p1 -N --directory=/usr/local/lib/python3.10/dist-packages/ < /opt/amazon/rl_coach.patch
-
+RUN patch -p1 -N --directory=/usr/local/lib/python3.11/dist-packages/ < /opt/amazon/rl_coach.patch
+RUN pip install --no-cache-dir async-timeout
 ENV COACH_BACKEND=tensorflow
 ENV CUDA_VISIBLE_DEVICES=0
 # Copy workaround script for incorrect hostname

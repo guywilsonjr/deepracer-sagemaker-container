@@ -47,6 +47,9 @@ WORKDIR /
 
 ENV SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True
 ADD docker/requirements.txt /
+RUN apt-get update && apt-get install python3.11-full python3.11-dev -y
+RUN python3.11 -m venv .venv
+RUN update-alternatives --install /usr/bin/python3 python3 /.venv/bin/python3.11 100
 RUN echo "${TF_VER}" > /requirements-tf.txt
 RUN pip --no-cache-dir install --upgrade pip 'setuptools<65' \
     && pip install --no-cache-dir -U -r requirements.txt
